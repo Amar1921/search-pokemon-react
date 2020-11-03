@@ -6,14 +6,15 @@ import {Card} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../components/pokemon-card.css'
 import {useHistory} from 'react-router-dom'
+
 type Props = {
     pokemon: Pokemon
     borderColor?: string
 };
 
 const PokemonCard: FunctionComponent<Props> = ({pokemon, borderColor = '#009688'}) => {
-
-    const {picture, name, created, types} = pokemon;
+    const history = useHistory();
+    const {picture, name, created, types, id} = pokemon;
     const [color, setColor] = useState<string>("")
     const showBorder = () => (
         setColor(borderColor)
@@ -21,13 +22,14 @@ const PokemonCard: FunctionComponent<Props> = ({pokemon, borderColor = '#009688'
     const hideBorder = () => (
         setColor("#f5f5f5")
     )
+    const goToPokemon = (id: number) => {
+        history.push(`/pokemon/${id}`);
+    }
 
-
-   
     return (
-        <div className="col-sm-6 col-md-4 my-2 d-flex justify-content-center" onMouseEnter={showBorder}
+        <div className="col-sm-6 col-md-4 my-2 d-flex justify-content-center" onClick={() => (goToPokemon(id))}
+             onMouseEnter={showBorder}
              onMouseLeave={hideBorder}>
-
             <div className=" Card carte" style={{borderColor: color, width: "18rem"}}>
                 <Card.Img variant="top" src={picture} alt={name} className="imgCarte"/>
                 <Card.Body>
@@ -37,8 +39,8 @@ const PokemonCard: FunctionComponent<Props> = ({pokemon, borderColor = '#009688'
                     </Card.Text>
                     <Card.Text>
                         {
-                            types.map((type) => {
-                                return (<span className={formatType(type)}>{type}</span>)
+                            types.map((type,index) => {
+                                return (<span key={index} className={formatType(type)}>{type}</span>)
                             })
                         }
                     </Card.Text>

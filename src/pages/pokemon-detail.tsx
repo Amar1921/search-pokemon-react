@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import React, {FunctionComponent, useEffect, useState} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
 import Pokemon from '../models/pokemon';
 import POKEMONS from '../models/mock-pokemon';
 import formatDate from '../helpers/format-date';
@@ -7,9 +7,9 @@ import formatType from '../helpers/format-type';
 
 type Params = { id: string };
 
-const PokemonsDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match }) => {
+const PokemonsDetail: FunctionComponent<RouteComponentProps<Params>> = ({match}) => {
 
-    const [pokemon, setPokemon] = useState<Pokemon|null>(null);
+    const [pokemon, setPokemon] = useState<Pokemon | null>(null);
 
     useEffect(() => {
         POKEMONS.forEach(pokemon => {
@@ -22,13 +22,18 @@ const PokemonsDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match 
 
     return (
         <div>
-            { pokemon ? (
+            {pokemon ? (
                 <div className="row d-flex justify-content-center">
                     <div className="col-sm-8">
-                        <h2 className="header center">{ pokemon.name }</h2>
+                        <h2 className="header center">{pokemon.name}</h2>
                         <div className="card hoverable">
                             <div className="card-image">
-                                <img src={pokemon.picture} alt={pokemon.name} style={{width: '250px', margin: '0 auto'}}/>
+                                <img src={pokemon.picture} alt={pokemon.name}
+                                     style={{width: '250px', margin: '0 auto'}}/>
+                            </div>
+                            <div className="d-flex justify-content-end pr-3">
+                                <Link className="btn btn-outline-dark" to={`/pokemon/edit/${pokemon.id}`}>
+                                    Edit</Link>
                             </div>
                             <div className="card-stacked">
                                 <div className="card-content">
@@ -36,15 +41,15 @@ const PokemonsDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match 
                                         <tbody>
                                         <tr>
                                             <td>Nom</td>
-                                            <td><strong>{ pokemon.name }</strong></td>
+                                            <td><strong>{pokemon.name}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Points de vie</td>
-                                            <td><strong>{ pokemon.hp }</strong></td>
+                                            <td><strong>{pokemon.hp}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Dégâts</td>
-                                            <td><strong>{ pokemon.cp }</strong></td>
+                                            <td><strong>{pokemon.cp}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Types</td>
@@ -60,8 +65,9 @@ const PokemonsDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match 
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="card-action">
-                                    <Link to="/">Retour</Link>
+
+                                <div className="card-footer">
+                                    <Link className="btn btn-outline-dark" to="/">Back</Link>
                                 </div>
                             </div>
                         </div>

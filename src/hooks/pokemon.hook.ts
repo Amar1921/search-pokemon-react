@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 import Pokemon from "../models/pokemon";
 import POKEMONS from "../models/mock-pokemon";
@@ -7,6 +7,7 @@ import POKEMONS from "../models/mock-pokemon";
 const usePokemons = () => {
     const [pokemons, setPokemons] = useState<Pokemon[]>([])
     useEffect(() => {
+        fetch(`http`)
         setPokemons(POKEMONS)
     }, [])
     return pokemons;
