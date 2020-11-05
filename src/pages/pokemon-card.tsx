@@ -39,7 +39,7 @@ const PokemonCard: FunctionComponent<Props> = ({pokemon, borderColor = '#009688'
                     </Card.Text>
                     <Card.Text>
                         {
-                            types.map((type,index) => {
+                            types.map((type, index) => {
                                 return (<span key={index} className={formatType(type)}>{type}</span>)
                             })
                         }

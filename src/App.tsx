@@ -12,21 +12,19 @@ import PokemonEdit from "./pages/pokemon-edit";
 
 const App: FunctionComponent = () => {
 
-    const Amar = () => <h1>JE SUIS LA </h1>
 
     return (
         <Router>
-            <div className="container">
-                <Header/>
-                {/**********POKEMONS LIST*************/}
-                <Switch>
-                    <Route exact path='/' component={PokemonsList}/>
-                    <Route exact path='/pokemon' component={PokemonsList}/>
-                    <Route path='/pokemon/edit/:id' component={PokemonEdit}/>
-                    <Route path="/pokemon/:id" component={PokemonsDetail}/>
-                    <Route component={PageNotFound}/>
-                </Switch>
-            </div>
+
+            <Header/>
+            {/**********POKEMONS LIST*************/}
+            <Switch>
+                <Route exact path='/' component={PokemonsList}/>
+                <Route exact path='/pokemon' component={PokemonsList}/>
+                <Route path='/pokemon/edit/:id' component={PokemonEdit}/>
+                <Route path="/pokemon/:id" component={PokemonsDetail}/>
+                <Route component={PageNotFound}/>
+            </Switch>
 
         </Router>
 

@@ -1,8 +1,8 @@
 import React, {FunctionComponent, useState} from 'react';
 import Pokemon from '../models/pokemon';
 import formatType from '../helpers/format-type';
-import{useHistory} from 'react-router-dom'
-import Alert from "react-bootstrap/cjs/Alert";
+import {useHistory} from 'react-router-dom';
+
 type Props = {
     pokemon: Pokemon
 };
@@ -21,7 +21,7 @@ type Form = {
 }
 
 const PokemonForm: FunctionComponent<Props> = ({pokemon}) => {
-     const history = useHistory();
+    const history = useHistory();
     const types: string[] = [
         'Plante', 'Feu', 'Eau', 'Insecte', 'Normal', 'Electrik',
         'Poison', 'Fée', 'Vol', 'Combat', 'Psy'
@@ -46,33 +46,33 @@ const PokemonForm: FunctionComponent<Props> = ({pokemon}) => {
         let newForm: Form = form;
 
         // Validator name
-        if(!/^[a-zA-Zàéè ]{3,25}$/.test(form.name.value)) {
+        if (!/^[a-zA-Zàéè ]{3,25}$/.test(form.name.value)) {
             const errorMsg: string = 'Le nom du pokémon est requis (1-25).';
-            const newField: Field = { value: form.name.value, error: errorMsg, isValid: false };
-            newForm = { ...newForm, ...{ name: newField } };
+            const newField: Field = {value: form.name.value, error: errorMsg, isValid: false};
+            newForm = {...newForm, ...{name: newField}};
         } else {
-            const newField: Field = { value: form.name.value, error: '', isValid: true };
-            newForm = { ...newForm, ...{ name: newField } };
+            const newField: Field = {value: form.name.value, error: '', isValid: true};
+            newForm = {...newForm, ...{name: newField}};
         }
 
         // Validator hp
-        if(!/^[0-9]{1,3}$/.test(form.hp.value)) {
+        if (!/^[0-9]{1,3}$/.test(form.hp.value)) {
             const errorMsg: string = 'Les points de vie du pokémon sont compris entre 0 et 999.';
             const newField: Field = {value: form.hp.value, error: errorMsg, isValid: false};
-            newForm = { ...newForm, ...{ hp: newField } };
+            newForm = {...newForm, ...{hp: newField}};
         } else {
-            const newField: Field = { value: form.hp.value, error: '', isValid: true };
-            newForm = { ...newForm, ...{ hp: newField } };
+            const newField: Field = {value: form.hp.value, error: '', isValid: true};
+            newForm = {...newForm, ...{hp: newField}};
         }
 
         // Validator cp
-        if(!/^[0-9]{1,2}$/.test(form.cp.value)) {
+        if (!/^[0-9]{1,2}$/.test(form.cp.value)) {
             const errorMsg: string = 'Les dégâts du pokémon sont compris entre 0 et 99';
             const newField: Field = {value: form.cp.value, error: errorMsg, isValid: false};
-            newForm = { ...newForm, ...{ cp: newField } };
+            newForm = {...newForm, ...{cp: newField}};
         } else {
-            const newField: Field = { value: form.cp.value, error: '', isValid: true };
-            newForm = { ...newForm, ...{ cp: newField } };
+            const newField: Field = {value: form.cp.value, error: '', isValid: true};
+            newForm = {...newForm, ...{cp: newField}};
         }
 
         setForm(newForm);
@@ -96,27 +96,25 @@ const PokemonForm: FunctionComponent<Props> = ({pokemon}) => {
         // c'est-à-dire que l'on autorise l'utilisateur à cocher ou décocher un nouveau type.
         return true;
     }
-    const selectType =(type:string, e: React.ChangeEvent<HTMLInputElement> )=>{
+    const selectType = (type: string, e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
         let newField: Field;
-        if(checked){
+        if (checked) {
             const newTypes: string[] = form.types.value.concat([type]);
             newField = {isValid: true, value: newTypes}
 
-        }else{
-            const newTypes: string[] = form.types.value.filter((currentType:string) => currentType !== type);
-            newField = {isValid: true, value : newTypes}
+        } else {
+            const newTypes: string[] = form.types.value.filter((currentType: string) => currentType !== type);
+            newField = {isValid: true, value: newTypes}
         }
-        setForm({...form, ...{ types: newField}})
+        setForm({...form, ...{types: newField}})
     }
-    const hundleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
+    const hundleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const isFormValid = validateForm();
-       if (isFormValid){
-           history.push(`/pokemon/${pokemon.id}`)
-       }else {
-          /* alert('donnees invalide')*/
-       }
+        if (isFormValid) {
+            history.push(`/pokemon/${pokemon.id}`)
+        }
         console.log(form)
     }
     return (
@@ -130,12 +128,6 @@ const PokemonForm: FunctionComponent<Props> = ({pokemon}) => {
                     <label htmlFor="name">Nom</label>
                     <input className="form-control" type="text" name="name" onChange={e => hundleInputChange(e)}
                            value={form.name.value}/>
-                   {/* {
-                        form.cp.error &&
-                        <Alert  variant="danger">
-                            {form.cp.error}
-                        </Alert>
-                    }*/}
                     {form.name.error &&
                     <div className="card-panel red accent-1">
                         {form.name.error}
@@ -169,7 +161,8 @@ const PokemonForm: FunctionComponent<Props> = ({pokemon}) => {
                     {types.map(type => (
                         <div key={type} style={{marginBottom: '10px'}}>
                             <label>
-                                <input id={type} type="checkbox" name="type" disabled={!isTypesValid(type)}  onChange={e => selectType(type,e)}
+                                <input id={type} type="checkbox" name="type" disabled={!isTypesValid(type)}
+                                       onChange={e => selectType(type, e)}
                                        className="filled-in" value={type}
                                        checked={hasType(type)}/>
                                 <span>

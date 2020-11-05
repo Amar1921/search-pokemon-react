@@ -2,7 +2,6 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import PokemonForm from '../components/pokemon-form';
 import Pokemon from '../models/pokemon';
-import POKEMONS from '../models/mock-pokemon';
 
 
 type Params = { id: string };
@@ -10,13 +9,19 @@ type Params = { id: string };
 const PokemonEdit: FunctionComponent<RouteComponentProps<Params>> = ({match}) => {
 
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-
+    const [notPo, setNotPo] = useState<string>()
     useEffect(() => {
-        POKEMONS.forEach(pokemon => {
-            if (match.params.id === pokemon.id.toString()) {
-                setPokemon(pokemon);
-            }
-        })
+
+        fetch(`http://localhost:3001/pokemon/${match.params.id}`)
+            .then((response) => response.json())
+            .then((pokemon) => {
+                if (pokemon.id) {
+                    setPokemon(pokemon)
+                }
+
+            })
+            .catch(() => setNotPo('Aucun pokémon à afficher !'))
+
     }, [match.params.id]);
 
     return (
@@ -26,9 +31,7 @@ const PokemonEdit: FunctionComponent<RouteComponentProps<Params>> = ({match}) =>
                     {/*<h2 className="header center">Éditer { pokemon.name }</h2>*/}
                     <PokemonForm pokemon={pokemon}/>
                 </div>
-            ) : (
-                <h4 className="center">Aucun pokémon à afficher !</h4>
-            )}
+            ) : <h4>{notPo}</h4>}
         </div>
     );
 }
